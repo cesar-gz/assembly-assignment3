@@ -15,7 +15,7 @@ CPP := g++
 CPP_FLAGS := -Wall -std=c++17 -m64 -gdwarf-2 -c
 
 #
-LINKER := gcc 
+LINKER := g++
 LINKER_FLAGS := -m64 -gdwarf-2 -no-pie
 
 # Your executable must be named my-program

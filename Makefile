@@ -3,20 +3,20 @@
 # TODO: Fill most of this in
 # Some parts have been filled in for you
 
-ASM :=
-ASM_FLAGS :=
+ASM := yasm
+ASM_FLAGS := -gdwarf2 -f elf64
 
 #
-CC :=
-CC_FLAGS:=
+CC := gcc
+CC_FLAGS:= -Wall -m64 -gdwarf-2 -c
 
 #
-CPP :=
-CPP_FLAGS :=
+CPP := g++
+CPP_FLAGS := -Wall -std=c++17 -m64 -gdwarf-2 -c
 
 #
-LINKER :=
-LINKER_FLAGS :=
+LINKER := gcc
+LINKER_FLAGS := -m64 -gdwarf-2 -no-pie
 
 # Your executable must be named my-program
 BIN_NAME := my-program
@@ -65,40 +65,43 @@ build:	$(BIN)
 
 
 # TODO: Fill this in
-$(BIN):
+$(BIN): largest.o input_array.o manager.o find_largest.o output_array.o
 	@echo
 	@echo "Linking: $@"
+	$(LINKER) $(LINKER_FLAGS) *.o *.so -o $@
+	@echo "Done linking"
 
 
 # TODO: Fill this in
-largest.o:
+largest.o: largest.cpp
 	@echo
 	@echo "Building: $@"
+	$(CPP) $(CPP_FLAGS) largest.cpp -o $@
 
 
 # TODO: Fill this in
-manager.o:
+manager.o: manager.asm
 	@echo
 	@echo "Building: $@"
-
+	$(ASM) $(ASM_FLAGS) manager.asm -o $@
 
 # TODO: Fill this in
-input_array.o:
+input_array.o: input_array.cpp
 	@echo
 	@echo "Building: $@"
-
+	$(CPP) $(CPP_FLAGS) input_array.cpp -o $@
 
 # TODO: Fill this in
-output_array.o:
+output_array.o: output_array.asm
 	@echo
 	@echo "Building: $@"
-
+	$(ASM) $(ASM_FLAGS) output_array.asm -o $@
 
 # TODO: Fill this in
-find_largest.o:
+find_largest.o: find_largest.asm
 	@echo
 	@echo "Building: $@"
-
+	$(ASM) $(ASM_FLAGS) find_largest.asm -o $@
 
 
 

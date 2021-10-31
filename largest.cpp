@@ -10,7 +10,7 @@ int main(){
 	cout << endl;
 	cout << "Welcome to CPSC 240 Assignment 3 brought to you by Cesar Gutierrez." << endl;
 	manager();
-	cout << "We are now back from manager() function." <<endl;
+	cout << "We are now back in largest.cpp" <<endl;
 	return 0;
 }
 

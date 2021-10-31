@@ -6,7 +6,7 @@ FD_STDOUT					equ		1
 CRLF						db		13,10
 CRLF_LEN					equ		$-CRLF
 
-A					db	"( "
+A					db	"("
 A_LEN		equ	$-A
 B					db	" integers)"
 B_LEN		equ	$-B
@@ -34,6 +34,12 @@ output_array:
 	mov rdi, r15
 	call libPuhfessorP_printSignedInteger64
 	call crlf
+	
+	mov rax, SYS_WRITE
+	mov rdi, FD_STDOUT
+	mov rsi, B
+	mov rdx, B_LEN
+	syscall
 	
 	pop r15
 	pop r14

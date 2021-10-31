@@ -6,7 +6,6 @@ section .data
 	SYS_WRITE		equ	1
 	FD_STDOUT		equ	1
 	
-	POINTER			dq	0
 	ARRAY_SIZE		dq	100
 	
 	CRLF			db	13,10
@@ -14,13 +13,14 @@ section .data
 	
 	MSG			db	"The manager is here to assist you."
 	MSG_LEN		equ	$-MSG
-	REC			db	"The following integers were received: "
+	REC			db	"The following integers were received:"
 	REC_LEN		equ	$-REC
 
 ; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 section .text
 
 extern input_array
+extern output_array
 
 global manager
 manager:
@@ -35,7 +35,6 @@ manager:
 	
 	; allocate array
 	push rbp
-	push rbx
 	push r12
 	mov rbp, rsp
 	mov r10, [ARRAY_SIZE]
@@ -43,10 +42,11 @@ manager:
 	sub rsp, r10
 	mov r12, rsp
 	; init array
-	mov rdi, POINTER
+	mov rdi, r12
 	mov rsi, [ARRAY_SIZE]
 	call input_array
 	; save result here
+	mov r10, rax
 	
 	; step 4
 	mov rax, SYS_WRITE
@@ -55,11 +55,13 @@ manager:
 	mov rdx, REC_LEN
 	syscall
 	call crlf
+	mov rdi, r12
+	mov rsi, r10
+	call output_array
 	
 	; clean up
 	mov rsp, rbp
 	pop r12
-	pop rbx
 	pop rbp
 	mov rax, 0
 	ret

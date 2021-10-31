@@ -1,6 +1,4 @@
 #include <iostream>
-#include <limits>
-#include <vector>
 using namespace std;
 
 extern "C" signed long input_array(signed long* ptr, signed long size){
@@ -14,15 +12,14 @@ extern "C" signed long input_array(signed long* ptr, signed long size){
 		cout << "Enter the next integer: ";
 		cin >> input;
 		if(cin.fail()){
-			cout << "You entered nonsense! Assuming you are done.";
+			cout << "You entered nonsense! Assuming you are done.\n";
+			cout << "Total numbers entered: " << count << endl;
 			return count;
 			}
 		else if(input){
-			//append the user input to the array
-			return 0;
+			*(ptr+count) = input;
+			count++;
 			}
-		*(ptr+count) = input;
-		count++;
 	}
 
 }

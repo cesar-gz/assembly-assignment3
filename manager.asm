@@ -7,13 +7,15 @@ section .data
 	FD_STDOUT		equ	1
 	
 	POINTER			dq	0
-	ARRAY_SIZE	dq	100
+	ARRAY_SIZE		dq	100
 	
-	CRLF					db	13,10
+	CRLF			db	13,10
 	CRLF_LEN		equ	$-CRLF
 	
-	WELCOME_MSG					db	"The manager is here to assist you."
-	WELCOME_MSG_LEN		equ	$-WELCOME_MSG
+	MSG			db	"The manager is here to assist you."
+	MSG_LEN		equ	$-MSG
+	REC			db	"The following integers were received: "
+	REC_LEN		equ	$-REC
 
 ; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 section .text
@@ -26,8 +28,8 @@ manager:
 	; step 2
 	mov rax, SYS_WRITE
 	mov rdi, FD_STDOUT
-	mov rsi, WELCOME_MSG
-	mov rdx, WELCOME_MSG_LEN
+	mov rsi, MSG
+	mov rdx, MSG_LEN
 	syscall
 	call crlf
 	
@@ -44,7 +46,17 @@ manager:
 	mov rdi, POINTER
 	mov rsi, [ARRAY_SIZE]
 	call input_array
+	; save result here
 	
+	; step 4
+	mov rax, SYS_WRITE
+	mov rdi, FD_STDOUT
+	mov rsi, REC
+	mov rdx, REC_LEN
+	syscall
+	call crlf
+	
+	; clean up
 	mov rsp, rbp
 	pop r12
 	pop rbx

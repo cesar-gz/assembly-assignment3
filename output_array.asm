@@ -3,14 +3,12 @@ section .data
 SYS_WRITE					equ		1
 FD_STDOUT					equ		1
 
-;A_SIZE					dq	100
-
 CRLF						db		13,10
 CRLF_LEN					equ		$-CRLF
 
 A					db	"("
 A_LEN		equ	$-A
-B					db	" integers)"
+B					db	" integers) "
 B_LEN		equ	$-B
 C					db	", "
 C_LEN		equ	$-C
@@ -44,11 +42,15 @@ output_array:
 	syscall
 	
 	; loop that prints out array
+	mov r13, 0
 	lea rbx, [r14 + (100 * 8) -1]
 	
 print_top:
+	cmp r13, r15
+	je clean
 	cmp r14, rbx
 	jg clean
+	inc r13
 	mov rdi, [r14]
 	call libPuhfessorP_printSignedInteger64
 	mov rax, SYS_WRITE

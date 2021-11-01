@@ -1,3 +1,7 @@
+// CPSC 240, Cesar Gutierrez
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 #include <iostream>
 using namespace std;
 

@@ -25,19 +25,19 @@ find_largest:
 	mov r13, rdi ;pointer is in r13
 	mov r14, rsi ;count is in r14
 	mov r10, 0
-	mov r15, [r13] ; hopefully the value at index 0 is in r15 now
+	mov r15, [r13*8] ; hopefully the value at index 0 is in r15 now
 	
 looptop:
 	cmp r10, r14 ; if 0 = count, jump to clean
 	je clean
-	cmp [r13], [r15]
-	j
-		cmp r, r13
-		j clean
+	;cmp [r13], [r15]
+	cmp r13, r15
+	jge topdog
 
 topdog:
 	mov r13, r15
-	jmp looprop:
+	inc r10
+	jmp looptop
 
 clean:
 

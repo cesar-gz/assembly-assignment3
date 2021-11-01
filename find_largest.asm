@@ -18,14 +18,41 @@ section .text
 global find_largest
 find_largest:
 
+	push r10
+	push r13
+	push r14
+	push r15
+	mov r13, rdi ;pointer is in r13
+	mov r14, rsi ;count is in r14
+	mov r10, 0
+	mov r15, [r13] ; hopefully the value at index 0 is in r15 now
+	
+looptop:
+	cmp r10, r14 ; if 0 = count, jump to clean
+	je clean
+	cmp [r13], [r15]
+	j
+		cmp r, r13
+		j clean
+
+topdog:
+	mov r13, r15
+	jmp looprop:
+
+clean:
+
+	mov r12, r13 ;r13 is the index we want, move it to r12 and hope it passes back to manager
 	mov rax, SYS_WRITE
 	mov rdi, FD_STDOUT
 	mov rsi, M
 	mov rdx, M_LEN
 	syscall
 	call crlf
-
-	mov rax, 0
+	pop r15
+	pop r14
+	pop r13
+	pop r10
+	;mov rax, 0
 	ret
 
 crlf:

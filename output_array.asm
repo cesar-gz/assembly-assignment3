@@ -46,13 +46,15 @@ output_array:
 	lea rbx, [r14 + (100 * 8) -1]
 	
 print_top:
-	cmp r13, r15
+	cmp r13, r15	;if 0 => count, stop loop
 	je clean
 	cmp r14, rbx
 	jg clean
-	inc r13
+	inc r13			;since 0 is !>= count, hence 0 is < count, proceed with printing loop
 	mov rdi, [r14]
 	call libPuhfessorP_printSignedInteger64
+	cmp r13, r15	;if we are on our last index then do not add the last comma
+	je clean
 	mov rax, SYS_WRITE
 	mov rdi, FD_STDOUT
 	mov rsi, C
@@ -61,8 +63,9 @@ print_top:
 	add r14, 8
 	jmp print_top
 
-clean:	
+clean:
 	; clean up
+	call crlf
 	pop r15
 	pop r14
 	pop r13

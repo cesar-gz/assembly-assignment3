@@ -1,3 +1,7 @@
+; CPSC 240, Cesar Gutierrez
+
+; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 section .data
 
 SYS_WRITE					equ		1
@@ -46,7 +50,7 @@ output_array:
 	lea rbx, [r14 + (100 * 8) -1]
 	
 print_top:
-	cmp r13, r15	;if 0 => count, stop loop
+	cmp r13, r15	;if 0 = count, stop loop
 	je clean
 	cmp r14, rbx
 	jg clean

@@ -21,6 +21,7 @@ section .text
 
 extern input_array
 extern output_array
+extern find_largest
 
 global manager
 manager:
@@ -58,6 +59,11 @@ manager:
 	mov rdi, r12
 	mov rsi, r10
 	call output_array
+	
+	; step 8
+	mov rdi, r12 ;array index
+	mov rsi, r10 ;count
+	call find_largest
 	
 	; clean up
 	mov rsp, rbp
